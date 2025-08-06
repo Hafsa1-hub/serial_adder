@@ -1,0 +1,436 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+!s11f MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 d/home/hafsa/Desktop/assignment/serial_adder
+T_opt
+!s110 1754030864
+VlJ<KPdZ5Ja7nKB@RU?Bh<2
+04 6 4 work top_tb fast 0
+=1-000ae431a4f1-688c6310-12236-365d
+Z2 !s124 OEM100
+Z3 o-quiet -auto_acc_if_foreign -work work +acc
+Z4 tCvgOpt 0
+n@_opt
+Z5 OL;O;2021.2_1;73
+R1
+T_opt1
+!s110 1754030576
+Vz93SK]fPJV?PEf;F<oJdm2
+04 16 4 work top_sb_check_fsm fast 0
+=1-000ae431a4f1-688c61ef-e76fe-352e
+R2
+R3
+R4
+n@_opt1
+R5
+R1
+T_opt2
+!s110 1754284750
+Vcf[RX3TCF`TWb__X`PUOV1
+04 3 4 work fsm fast 0
+=1-000ae431a4f1-689042ce-9f44b-123c
+R2
+o-quiet -auto_acc_if_foreign -work work
+R4
+n@_opt2
+R5
+vd_ff
+Z6 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z7 DXx4 work 11 top_sv_unit 0 22 9cO9DZiV6_nN>YbBcbDo[3
+Z8 !s110 1754030850
+Z9 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+!i10b 1
+!s100 fJ@kgEbLfeOjPYCaVTXMQ2
+IO8?@[VHXD0V7I6imL`YcW3
+Z10 !s105 top_sv_unit
+S1
+R1
+w1752037681
+8d_ff.sv
+Z11 Fd_ff.sv
+!i122 21
+L0 33 18
+Z12 OL;L;2021.2_1;73
+31
+Z13 !s108 1754030850.000000
+Z14 !s107 d_ff.sv|serial_parallel.sv|parallel_to_serial_sr.sv|full_adder.sv|fsm.sv|top.sv|
+Z15 !s90 -reportprogress|300|top.sv|+cover|
+!i113 0
+Z16 !s102 +cover
+Z17 o+cover -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
+vfsm
+R6
+DXx4 work 11 fsm_sv_unit 0 22 `ZX`olN0NCAgTg8XjWYVc3
+Z18 !s110 1754284738
+R9
+r1
+!s85 0
+!i10b 1
+!s100 ]SZmiz[]K8:ZdJkd@U7JY0
+IcXoTnEKUI_`eIjN1XH]BS3
+!s105 fsm_sv_unit
+S1
+R1
+Z19 w1754284737
+Z20 8fsm.sv
+Z21 Ffsm.sv
+!i122 22
+L0 38 83
+R12
+31
+Z22 !s108 1754284738.000000
+Z23 !s107 fsm.sv|
+Z24 !s90 fsm.sv|
+!i113 0
+Z25 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
+vfsm_operation
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 Hh;j;GV`PO[V`?e5BiSg52
+I8Q8ih6INBl8V@R]G5a^`L3
+R10
+S1
+R1
+Z26 w1754023827
+R20
+R21
+!i122 21
+L0 38 90
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vfsm_operation_tb
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 >L_emh0AEhSWmX7_b1IWo3
+I_R8[b24_1F[@>Wc>:0OLc0
+R10
+S1
+R1
+R26
+R20
+R21
+!i122 21
+L0 130 38
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+Xfsm_sv_unit
+R6
+R18
+V`ZX`olN0NCAgTg8XjWYVc3
+r1
+!s85 0
+!i10b 1
+!s100 e@1[]b>mjd8Jg4n3nNKV81
+I`ZX`olN0NCAgTg8XjWYVc3
+!i103 1
+S1
+R1
+R19
+R20
+R21
+!i122 22
+L0 4 0
+R12
+31
+R22
+R23
+R24
+!i113 0
+R25
+R4
+vfull_adder
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 IiIn]O5FVi>gXglCk_eYD1
+I9zQWFgTVgY]``J=;<gcJB0
+R10
+S1
+R1
+w1751978633
+8full_adder.sv
+Z27 Ffull_adder.sv
+!i122 21
+L0 21 11
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vparallel_to_serial_sr
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 NiWR5HG>[W2F;fK0HGb9H1
+In^?73gee5kiL@^o_0T>Yh3
+R10
+S1
+R1
+w1754030194
+8parallel_to_serial_sr.sv
+Z28 Fparallel_to_serial_sr.sv
+!i122 21
+L0 22 33
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vserial_parallel
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 EoSAiIcaRV1Pg`ca1^H5b1
+I9a:8E>T@<<W]mK2^T`POH1
+R10
+S1
+R1
+Z29 w1752040120
+Z30 8serial_parallel.sv
+Z31 Fserial_parallel.sv
+!i122 21
+L0 20 28
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vshift_register_serial_parallel_tb
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 QT=ioP9Yo@E^i[FiY^;[B1
+IP7MX4=@GUB2L8_c6bZM9<2
+R10
+S1
+R1
+R29
+R30
+R31
+!i122 21
+L0 56 48
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vtop
+R6
+R7
+R8
+R9
+r1
+!s85 0
+!i10b 1
+!s100 >YXoC0aLg4PT869U]6aeS3
+IfbJidE;46kolaWe:A6<;D1
+R10
+S1
+R1
+Z32 w1754030532
+Z33 8top.sv
+Z34 Ftop.sv
+!i122 21
+L0 32 85
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vtop_sb_check_fsm
+R6
+Z35 DXx4 work 14 top_tb_sv_unit 0 22 c_`<]aSF5jEcI5?Y=Umc[2
+Z36 !s110 1754030560
+R9
+r1
+!s85 0
+!i10b 1
+!s100 X7[`a1<in@>`lLh6>Ba:i2
+I^nR`l7zcQbf8Hz3994:aM3
+Z37 !s105 top_tb_sv_unit
+S1
+R1
+Z38 w1754027279
+Z39 8/home/hafsa/Desktop/assignment/serial_adder/top_tb.sv
+Z40 F/home/hafsa/Desktop/assignment/serial_adder/top_tb.sv
+!i122 20
+L0 5 242
+R12
+31
+Z41 !s108 1754030560.000000
+Z42 !s107 d_ff.sv|serial_parallel.sv|parallel_to_serial_sr.sv|full_adder.sv|fsm.sv|top.sv|/home/hafsa/Desktop/assignment/serial_adder/top_tb.sv|
+Z43 !s90 -reportprogress|300|-work|work|/home/hafsa/Desktop/assignment/serial_adder/top_tb.sv|
+!i113 0
+Z44 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
+Xtop_sv_unit
+R6
+R8
+V9cO9DZiV6_nN>YbBcbDo[3
+r1
+!s85 0
+!i10b 1
+!s100 T@]FQG>^ITUB_SBB1T`F`1
+I9cO9DZiV6_nN>YbBcbDo[3
+!i103 1
+S1
+R1
+R32
+R33
+R34
+R21
+R27
+R28
+R31
+R11
+!i122 21
+Z45 L0 2 0
+R12
+31
+R13
+R14
+R15
+!i113 0
+R16
+R17
+R4
+vtop_tb
+R6
+R35
+R36
+R9
+r1
+!s85 0
+!i10b 1
+!s100 DD8`DODmA]kC>E`HOWW2V2
+In8UZiiOHn21YLYE3_mA?U1
+R37
+S1
+R1
+R38
+R39
+R40
+!i122 20
+L0 249 346
+R12
+31
+R41
+R42
+R43
+!i113 0
+R44
+R4
+Xtop_tb_sv_unit
+R6
+R36
+Vc_`<]aSF5jEcI5?Y=Umc[2
+r1
+!s85 0
+!i10b 1
+!s100 9Sjz:d3c8NUmieVRI32`?2
+Ic_`<]aSF5jEcI5?Y=Umc[2
+!i103 1
+S1
+R1
+R32
+R39
+R40
+R34
+R21
+R27
+R28
+R31
+R11
+!i122 20
+R45
+R12
+31
+R41
+R42
+R43
+!i113 0
+R44
+R4

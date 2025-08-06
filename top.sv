@@ -107,7 +107,7 @@ module top (
 
   //assign final_sum_o = (});
   always @(sp_sr.count) begin
-    if (sp_sr.count == WIDTH) begin
+    if (sp_sr.count == WIDTH + 'd1) begin
       final_sum_o = ({cin_top, sum_top});
     end else begin
       final_sum_o = final_sum_o;

@@ -26,7 +26,7 @@ module serial_parallel (
 );
 
   reg [WIDTH-1:0] reg_data;
-  reg [3:0] count;
+  reg [$clog2(WIDTH)-1:0] count;
   always @(posedge clk_i) begin
     if (reset_n_i) begin
       reg_data <= '0;
@@ -35,7 +35,7 @@ module serial_parallel (
 
       reg_data <= {sum_o_out_i, reg_data[WIDTH-1:1]};  // Shift right
 
-      sum_o <= reg_data;
+  //    sum_o <= reg_data;
       count <= count + 1;
     end
     /*if (count == WIDTH) begin
@@ -43,7 +43,7 @@ module serial_parallel (
       count <= 0;
     end*/
   end
-  //assign sum_o = reg_data;
+  assign sum_o = reg_data;
 endmodule
 
 
