@@ -12,13 +12,35 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# vsim fsm 
-# Start time: 10:49:10 on Aug 04,2025
-# ** Note: (vsim-3812) Design is being optimized...
+# vsim -voptargs="+acc" top_sb_check_fsm 
+# Start time: 15:12:18 on Aug 07,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Note: (vopt-143) Recognized 1 FSM in module "fsm(fast)".
 # Loading sv_std.std
-# Loading work.fsm_sv_unit(fast)
+# Loading work.top_tb_sv_unit(fast)
+# Loading work.top_sb_check_fsm(fast)
+# Loading work.top(fast)
+# Loading work.parallel_to_serial_sr(fast)
+# Loading work.full_adder(fast)
+# Loading work.d_ff(fast)
 # Loading work.fsm(fast)
-run
-# Break key hit
-# End time: 10:49:30 on Aug 04,2025, Elapsed time: 0:00:20
+# Loading work.serial_parallel(fast)
+add wave -position insertpoint sim:/top_sb_check_fsm/*
+add wave -position insertpoint  \
+sim:/top_sb_check_fsm/top_sa/fsm_states/current_state
+add wave -position insertpoint  \
+sim:/top_sb_check_fsm/top_sa/fsm_states/next_state
+add wave -position insertpoint  \
+sim:/top_sb_check_fsm/top_sa/fsm_states/count
+run -all
+# FAIL: 192 + 128 != 486 (expected 320)
+# FAIL: 126 + 240 != 320 (expected 366)
+# FAIL: 85 + 85 != 366 (expected 170)
+# FAIL: 134 + 40 != 170 (expected 174)
+# FAIL: 170 + 140 != 174 (expected 310)
+# ** Note: $finish    : top_tb.sv(130)
+#    Time: 5965 ns  Iteration: 0  Instance: /top_sb_check_fsm
+# 1
+# Break in Module top_sb_check_fsm at top_tb.sv line 130
+# End time: 15:14:16 on Aug 07,2025, Elapsed time: 0:01:58
 # Errors: 0, Warnings: 0

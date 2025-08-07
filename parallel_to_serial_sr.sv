@@ -40,8 +40,8 @@ module parallel_to_serial_sr (
       b_o <= 0;
     end else begin
       if (load_i) begin
-        temp_b <= a_i;  // IF its Blocking its shifting X after that its shift normal data
-        temp_a <= b_i;
+        temp_a <= a_i;  
+        temp_b <= b_i;
       end
       if (enable_i) begin
         temp_a <= temp_a >> 1;

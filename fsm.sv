@@ -1,7 +1,7 @@
 
 // FSM CODING FOR SHIFTING THE DATA !! 
 //typedef enum {reset_o=2'b00,load_o=2'b01,SHIFT=2'b10} state;
-parameter WIDTH = 8;
+//parameter WIDTH = 8;
 
 
 //parameter WIDTH=8;
@@ -20,125 +20,102 @@ parameter WIDTH = 8;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
+// FSM CODING FOR SHIFTING THE DATA !! 
+//typedef enum {reset_o=2'b00,load_o=2'b01,SHIFT=2'b10} state;
+//parameter WIDTH = 8;
+//parameter WIDTH=8;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    FILE Name     :  fsm.sv                                                                                     //
+//                                                                                                                //
+//    Description   :  FSM contains 3 State reset_o load_o SHIFT based on start_i and resetn_i                    //
+//                                                                                                                //
+//    Inputs        :  clk_i,resetn_i,start_i                                                                     //
+//                                                                                                                //
+//    Outputs       :  load_o enable_o reset_o                                                                    //
+//                                                                                                                //
+//                                                                                                                //
+//                                                                                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 typedef enum logic [1:0] {
   RESET = 2'b00,
   LOAD  = 2'b01,
   SHIFT = 2'b10
 } state_t;
 
-
-
-module fsm (
-    input resetn_i,
-    input start_i,
-    input clk_i,
-    output reg reset_o,
-    output reg load_o,
-    output reg enable_o
+module fsm #(
+  parameter int WIDTH = 8
+) (
+  input  logic        resetn_i,
+  input  logic        start_i,
+  input  logic        clk_i,
+  output logic        reset_o,
+  output logic        load_o,
+  output logic        enable_o
 );
-  //  output reg[1:0] state;
-  reg [WIDTH-1:0] count;
-  reg [1:0] current_state, next_state;
 
-  //parameter reset_o=2'b00,load_o=2'b01,SHIFT=2'b10;
+  state_t current_state, next_state;
+  logic [$clog2(WIDTH+1)-1:0] count;
 
-
-  always @(posedge clk_i) begin
-
+  // Sequential state and counter update
+  always_ff @(posedge clk_i or negedge resetn_i) begin
     if (!resetn_i) begin
       current_state <= RESET;
+      count <= 0;
     end else begin
       current_state <= next_state;
+
+      // Count increments only in SHIFT state
+      if (current_state == SHIFT && count < WIDTH)
+        count <= count + 1;
+      else if (current_state != SHIFT)
+        count <= 0;
     end
   end
-  always @(posedge clk_i) begin
+
+  // Combinational next state logic
+  always_comb begin
+    next_state = current_state;
+
     case (current_state)
-      reset_o: begin
-        if (!resetn_i) begin
-          reset_o  <= 1;
-          load_o   <= 0;
-          enable_o <= 0;
-          $display("IN reset STATE");
-          next_state <= RESET;
-          count      <= 0;
-        end else if (start_i) begin
-          reset_o    <= 0;
-          load_o     <= 1;
-          enable_o   <= 0;
-          next_state <= LOAD;
-        end
-        //else next_state <= current_state;
+      RESET: begin
+        if (start_i)
+          next_state = LOAD;
+        else if(!resetn_i)
+          next_state = RESET;
       end
 
-      load_o: begin
-        $display("IN load_o STATE");
-        if (!start_i && resetn_i) begin
-          reset_o    <= 0;
-          load_o     <= 0;
-          enable_o   <= 1;
-          next_state <= SHIFT;
-        end else if (!resetn_i) begin
-          next_state <= RESET;
-          reset_o    <= 1;
-          load_o     <= 0;
-          enable_o   <= 0;
-          $display("IN reset STATE");
-          next_state <= RESET;
-        end
-        //else next_state <= current_state;
+      LOAD: begin
+        if (!start_i)
+          next_state = SHIFT;
+        else if (!resetn_i)
+          next_state = RESET;
+        else
+          next_state = LOAD;
       end
+
       SHIFT: begin
-        $display("IN SHIFT STATE");
-        if (!start_i && resetn_i) begin
-          reset_o    <= 0;
-          load_o     <= 0;
-          enable_o   <= 1;
-          next_state <= SHIFT;
-          count      <= count + 1;
-          if (count == WIDTH) begin
-            enable_o <= 0;
-          end else begin
-            enable_o <= 1;
-          end
-        end else if (start_i && resetn_i) begin
-          next_state <= LOAD;
-          reset_o    <= 0;
-          load_o     <= 1;
-          enable_o   <= 0;
+        if (count == WIDTH+1|| (!resetn_i) ) begin
+          next_state = RESET;
+        end else if (start_i) begin
+          next_state = LOAD;
+        end else begin
+          next_state = SHIFT;
+          
         end
       end
-      default: next_state <= RESET;
+
+      default: next_state = RESET;
     endcase
   end
+
+  // Output logic (Moore-style: based on state only)
+  always_comb begin
+    reset_o  = (current_state == RESET);
+    load_o   = (current_state == LOAD);
+    enable_o = (current_state == SHIFT && count < WIDTH+1);
+  end
+
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

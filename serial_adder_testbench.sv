@@ -1,3 +1,4 @@
+
 `include "top.sv"
 
 module top_sb_check_fsm;
@@ -10,8 +11,8 @@ module top_sb_check_fsm;
   reg reset_n;
   reg start;
   wire [WIDTH:0] sum_out_sb;
-  bit check_trigger;
 
+  // DUT instance
   top top_sa (
     .clock_top_i(clk),
     .resetn_top_i(reset_n),
@@ -25,7 +26,41 @@ module top_sb_check_fsm;
   initial clk = 0;
   always #5 clk = ~clk;
 
-  // Self-check task
+  // ----------------- Reset Control -----------------
+  function void set_reset(input logic reset);
+    reset_n = reset;
+    $display(">>> set_reset(%0b) at time %0t", reset, $time);
+  endfunction
+
+  function void realize_reset(input logic reset);
+    reset_n = reset;
+    $display(">>> realize_reset(%0b) at time %0t", reset, $time);
+  endfunction
+
+  task reset_driver();
+    set_reset(0);
+    @(posedge clk);
+    realize_reset(1);
+  endtask
+
+  // ----------------- Start Signal Control -----------------
+  task assert_start();
+    start = 1;
+    $display(">>> assert_start() at time %0t", $time);
+  endtask
+
+  task deassert_start();
+    start = 0;
+    $display(">>> deassert_start() at time %0t", $time);
+  endtask
+
+  task pulse_start();
+    assert_start();
+    @(posedge clk);
+    deassert_start();
+  endtask
+
+  // ----------------- Self Check Task -----------------
   task self_check(input [WIDTH-1:0] A, input [WIDTH-1:0] B, input [WIDTH:0] ref_sum);
     reg [WIDTH:0] expected;
     begin
@@ -38,81 +73,53 @@ module top_sb_check_fsm;
     end
   endtask
 
-  // Trigger check
-  always @(posedge clk) begin
-    if (check_trigger)
-      self_check(A_sb, B_sb, sum_out_sb);
-  end
-
-  // Stimulus task
+  // ----------------- Stimulus Application -----------------
   task apply_vectors(input [WIDTH-1:0] A, input [WIDTH-1:0] B);
     begin
       @(posedge clk);
       A_sb = A;
       B_sb = B;
-      start = 1;
-      @(posedge clk);
-      start = 0;
-      check_trigger = 1;
-      @(posedge clk);
-      check_trigger = 0;
-        repeat (WIDTH+5) @(posedge clk);
-        reset_n = 0;
-         @(posedge clk);
+      pulse_start();
+      self_check(A_sb, B_sb, sum_out_sb);
+      repeat (WIDTH+5) @(posedge clk);
+      reset_driver();
     end
   endtask
 
-  function void set_reset(input logic reset);
-      reset_n = reset;
-  endfunction
- function void realize_reset(input logic reset);
-      reset_n = reset;
-  endfunction
-
-  // Main stimulus
+  // ----------------- Main Test Sequence -----------------
   initial begin
     reset_n = 0;
     start = 0;
-    check_trigger = 0;
-    #20 reset_n = 1;
+
+    #20 realize_reset(1);
 
     // Basic test cases
-    reset_n = 1;
-
     apply_vectors(8'b11101011, 8'b11111011);
-    reset_n = 1;
-
     apply_vectors(8'b11000000, 8'b10000000);
-    reset_n = 1;
-
     apply_vectors(8'd126, 8'd240);
-    reset_n = 1;
-
     apply_vectors(8'b01010101, 8'b01010101);
-    reset_n = 1;
 
-
-    // Random vectors
+    // Random test cases
     repeat (10) apply_vectors($urandom_range(0, 255), $urandom_range(0, 255));
 
-    // Edge condition: both 0
+    // Edge case: both 0
     apply_vectors('h00, 'h00);
 
     // Max value test
     apply_vectors('hFF, 'hFF);
 
-    // Reset pulse mid-sequence
-    @(posedge clk); reset_n = 0;
-    @(posedge clk); reset_n = 1;
+    // Mid-sequence reset pulse
+    @(posedge clk); set_reset(0);
+    @(posedge clk); realize_reset(1);
     apply_vectors($urandom_range(0, 255), $urandom_range(0, 255));
 
-    // Hit specific corner case: start=0, reset_n=0
+    // Corner case: start = 0, reset = 0
     start = 0;
-    reset_n = 0;
+    set_reset(0);
     @(posedge clk);
-    reset_n = 1;
+    realize_reset(1);
 
-    // Coverage: LOOP with various transitions
+    // Functional coverage sweep
     repeat (10) begin
       apply_vectors($urandom_range(0, 255), $urandom_range(0, 255));
       start = ~start;
@@ -120,19 +127,22 @@ module top_sb_check_fsm;
       @(posedge clk);
     end
 
-    // Final few tests
+    // Final tests
     apply_vectors('h20, 'h30);
-    reset_n = 0;
-    @(posedge clk); reset_n = 1;
+    set_reset(0);
+    @(posedge clk); realize_reset(1);
 
     repeat (5) apply_vectors($random, $random);
 
     #200 $finish;
   end
 
+  // ----------------- Trigger Check Monitor -----------------
+ // always @(posedge clk) begin
+  //  if (check_trigger)
+    //  self_check(A_sb, B_sb, sum_out_sb);
+  //end
+
 endmodule
 
 
-
-
-///////////////////////////////////////////////////////////////////////////
